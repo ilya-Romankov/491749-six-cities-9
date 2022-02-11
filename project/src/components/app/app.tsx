@@ -1,5 +1,10 @@
+import MainScreen from '../main-screen/main-screen';
+import {HOSTEL_COUNT} from '../../constant';
+
 function App(): JSX.Element {
-  return <p>Hello, world!</p>;
+  return (
+    <MainScreen offersCount={HOSTEL_COUNT} />
+  );
 }
 
 export default App;
