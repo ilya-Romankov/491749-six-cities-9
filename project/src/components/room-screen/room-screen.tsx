@@ -7,11 +7,11 @@ function RoomScreen(): JSX.Element {
   const [, setComment] = useState<string>('');
   const [,setRating] = useState<string>('');
 
-  const handleChangeComment = (evt: ChangeEvent<HTMLTextAreaElement>):void => {
+  const handleChangeComment = (evt: ChangeEvent<HTMLTextAreaElement>): void => {
     setComment(evt.currentTarget.value);
   };
 
-  const handleChangeRating = (evt: ChangeEvent<HTMLInputElement>):void => {
+  const handleChangeRating = (evt: ChangeEvent<HTMLInputElement>): void => {
     setRating(evt.currentTarget.value);
   };
 
