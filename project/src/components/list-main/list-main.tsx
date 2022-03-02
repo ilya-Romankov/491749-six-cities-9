@@ -11,7 +11,13 @@ function ListMain({hostels}: ListOfferProps): JSX.Element {
 
   return (
     <div className="cities__places-list places__list tabs__content">
-      {hostels.map((hostel) => <HostelCard getActiveCard={() => setActiveCard(hostel.id)} hostel={hostel} key={hostel.id} />)}
+      {hostels.map((hostel) => (
+        <HostelCard
+          getActiveCard={() => setActiveCard(hostel.id)}
+          hostel={hostel}
+          key={hostel.id}
+        />
+      ))}
     </div>
   );
 }

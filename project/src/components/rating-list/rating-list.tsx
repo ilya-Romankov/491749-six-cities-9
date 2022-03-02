@@ -3,13 +3,19 @@ import {RatingValue} from '../../constant';
 import {ChangeEvent} from 'react';
 
 type RatingListProps = {
-  changeRating: (evt: ChangeEvent<HTMLInputElement>) => void;
+  onChangeRating: (evt: ChangeEvent<HTMLInputElement>) => void;
 }
 
-function RatingList({changeRating}: RatingListProps): JSX.Element {
+function RatingList({onChangeRating}: RatingListProps): JSX.Element {
   return (
     <div className="reviews__rating-form form__rating">
-      {RatingValue.map((rating) => <RatingStar key={rating} changeRating={changeRating} rating={rating} />)}
+      {RatingValue.map((rating) => (
+        <RatingStar
+          key={rating}
+          onChangeRating={onChangeRating}
+          rating={rating}
+        />
+      ))}
     </div>
   );
 }

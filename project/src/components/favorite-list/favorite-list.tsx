@@ -10,12 +10,16 @@ import {Hostel} from '../../types/hostel';
 function FavoriteList({hostels} :FavoriteListProps): JSX.Element {
   const hostelsGroupByCity = Object.entries(groupByCity(hostels));
 
-
   return (
     <ul className="favorites__list">
       {hostelsGroupByCity.map(([city, hostel], index) => (
-        hostel.length > 0 && <FavoritesCard key={city} cityName={city} hostels={hostel} />
-      ))}
+        hostel.length > 0 && (
+          <FavoritesCard
+            key={city}
+            cityName={city}
+            hostels={hostel}
+          />
+        )))}
     </ul>
   );
 }

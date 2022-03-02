@@ -2,10 +2,10 @@ import {ChangeEvent} from 'react';
 
 type RatingStarProps = {
   rating: string;
-  changeRating: (evt: ChangeEvent<HTMLInputElement>) => void;
+  onChangeRating: (evt: ChangeEvent<HTMLInputElement>) => void;
 }
 
-function RatingStar({rating, changeRating}: RatingStarProps): JSX.Element {
+function RatingStar({rating, onChangeRating}: RatingStarProps): JSX.Element {
   return (
     <>
       <input
@@ -14,7 +14,7 @@ function RatingStar({rating, changeRating}: RatingStarProps): JSX.Element {
         value={rating}
         id={`${rating}-stars`}
         type="radio"
-        onChange={(evt) => changeRating(evt)}
+        onChange={(evt) => onChangeRating(evt)}
       />
       <label htmlFor={`${rating}-stars`} className="reviews__rating-label form__rating-label" title="perfect">
         <svg className="form__star-image" width="37" height="33">

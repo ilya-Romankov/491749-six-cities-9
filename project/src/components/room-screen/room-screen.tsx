@@ -5,7 +5,7 @@ import {offers} from '../../mock/offers';
 
 function RoomScreen(): JSX.Element {
   const [, setComment] = useState<string>('');
-  const [,setRating] = useState<string>('');
+  const [, setRating] = useState<string>('');
 
   const handleChangeComment = (evt: ChangeEvent<HTMLTextAreaElement>): void => {
     setComment(evt.currentTarget.value);
@@ -181,7 +181,7 @@ function RoomScreen(): JSX.Element {
               </ul>
               <form className="reviews__form form" action="#" method="post">
                 <label className="reviews__label form__label" htmlFor="review">Your review</label>
-                <RatingList changeRating={handleChangeRating} />
+                <RatingList onChangeRating={handleChangeRating} />
                 <textarea
                   className="reviews__textarea form__textarea"
                   id="review"
