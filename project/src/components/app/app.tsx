@@ -6,9 +6,15 @@ import RoomScreen from '../room-screen/room-screen';
 import FavoritesScreen from '../favorites-screen/favorites-screen';
 import PrivateRoute from '../private-route/private-route';
 import NotFound from '../not-found/not-found';
-import {HOSTEL_COUNT, AppRoute, AuthorizationStatus} from '../../constant';
+import {Hostel} from '../../types/hostel';
+import {AppRoute, AuthorizationStatus} from '../../constant';
 
-function App(): JSX.Element {
+type AppProps = {
+  hostels: Hostel[];
+}
+
+function App({hostels}:AppProps): JSX.Element {
+
   return (
     <BrowserRouter>
       <Routes>
@@ -18,7 +24,7 @@ function App(): JSX.Element {
         >
           <Route
             path={AppRoute.Main}
-            element={<MainScreen offersCount={HOSTEL_COUNT} />}
+            element={<MainScreen hostels={hostels} />}
           />
           <Route
             path={AppRoute.Sign_In}
@@ -31,8 +37,8 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-                <FavoritesScreen />
+              <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+                <FavoritesScreen hostel={hostels} />
               </PrivateRoute>
             }
           />

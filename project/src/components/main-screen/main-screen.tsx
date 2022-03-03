@@ -1,11 +1,13 @@
-import HostelCard from '../hostel-card/hostel-card';
-import {HOSTEL_ARRAY} from '../../constant';
+import ListMain from '../list-main/list-main';
+import {Hostel} from '../../types/hostel';
 
 type MainScreenProps = {
-  offersCount: number;
+  hostels: Hostel[];
 }
 
-function MainScreen({offersCount}: MainScreenProps): JSX.Element {
+function MainScreen({hostels}: MainScreenProps): JSX.Element {
+  const offersCount = hostels.length;
+
   return (
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
@@ -65,9 +67,8 @@ function MainScreen({offersCount}: MainScreenProps): JSX.Element {
                 <li className="places__option" tabIndex={0}>Top rated first</li>
               </ul>
             </form>
-            <div className="cities__places-list places__list tabs__content">
-              {HOSTEL_ARRAY.map((i) => <HostelCard key={i}/>)}
-            </div>
+
+            <ListMain hostels={hostels} />
           </section>
           <div className="cities__right-section">
             <section className="cities__map map"></section>

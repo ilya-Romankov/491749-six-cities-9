@@ -1,7 +1,3 @@
-export const HOSTEL_COUNT = 5;
-
-export const HOSTEL_ARRAY: number[] = Array(HOSTEL_COUNT).fill(undefined).map((e, i) => i + 1);
-
 export enum AppRoute {
   Main = '/',
   Sign_In = '/login',
@@ -15,3 +11,5 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
+
+export const RatingValue: string[] = ['5', '4', '3', '2', '1'];

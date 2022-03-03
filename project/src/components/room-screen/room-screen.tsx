@@ -1,4 +1,23 @@
+import {ChangeEvent, useState} from 'react';
+import RatingList from '../rating-list/rating-list';
+import {offers} from '../../mock/offers';
+
+
 function RoomScreen(): JSX.Element {
+  const [, setComment] = useState<string>('');
+  const [, setRating] = useState<string>('');
+
+  const handleChangeComment = (evt: ChangeEvent<HTMLTextAreaElement>): void => {
+    setComment(evt.currentTarget.value);
+  };
+
+  const handleChangeRating = (evt: ChangeEvent<HTMLInputElement>): void => {
+    setRating(evt.currentTarget.value);
+  };
+
+  const offer = offers[1];
+  const {title, bedrooms, type, price, maxAdults} = offer;
+
   return (
     <main className="page__main page__main--property">
       <section className="property">
@@ -31,7 +50,7 @@ function RoomScreen(): JSX.Element {
             </div>
             <div className="property__name-wrapper">
               <h1 className="property__name">
-                Beautiful &amp; luxurious studio at great location
+                {title}
               </h1>
               <button className="property__bookmark-button button" type="button">
                 <svg className="property__bookmark-icon" width="31" height="33">
@@ -49,17 +68,17 @@ function RoomScreen(): JSX.Element {
             </div>
             <ul className="property__features">
               <li className="property__feature property__feature--entire">
-                Apartment
+                {type}
               </li>
               <li className="property__feature property__feature--bedrooms">
-                3 Bedrooms
+                {bedrooms} Bedrooms
               </li>
               <li className="property__feature property__feature--adults">
-                Max 4 adults
+                Max {maxAdults} adults
               </li>
             </ul>
             <div className="property__price">
-              <b className="property__price-value">€120</b>
+              <b className="property__price-value">€{price}</b>
               <span className="property__price-text">&nbsp;night</span>
             </div>
             <div className="property__inside">
@@ -162,76 +181,13 @@ function RoomScreen(): JSX.Element {
               </ul>
               <form className="reviews__form form" action="#" method="post">
                 <label className="reviews__label form__label" htmlFor="review">Your review</label>
-                <div className="reviews__rating-form form__rating">
-                  <input
-                    className="form__rating-input visually-hidden"
-                    name="rating"
-                    value="5"
-                    id="5-stars"
-                    type="radio"
-                  />
-                  <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
-                    <svg className="form__star-image" width="37" height="33">
-                      <use xlinkHref="#icon-star"></use>
-                    </svg>
-                  </label>
-
-                  <input
-                    className="form__rating-input visually-hidden"
-                    name="rating"
-                    value="4"
-                    id="4-stars"
-                    type="radio"
-                  />
-                  <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
-                    <svg className="form__star-image" width="37" height="33">
-                      <use xlinkHref="#icon-star"></use>
-                    </svg>
-                  </label>
-
-                  <input
-                    className="form__rating-input visually-hidden"
-                    name="rating"
-                    value="3"
-                    id="3-stars"
-                    type="radio"
-                  />
-                  <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
-                    <svg className="form__star-image" width="37" height="33">
-                      <use xlinkHref="#icon-star"></use>
-                    </svg>
-                  </label>
-
-                  <input
-                    className="form__rating-input visually-hidden"
-                    name="rating"
-                    value="2"
-                    id="2-stars"
-                    type="radio"
-                  />
-                  <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
-                    <svg className="form__star-image" width="37" height="33">
-                      <use xlinkHref="#icon-star"></use>
-                    </svg>
-                  </label>
-                  <input
-                    className="form__rating-input visually-hidden"
-                    name="rating"
-                    value="1"
-                    id="1-star"
-                    type="radio"
-                  />
-                  <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
-                    <svg className="form__star-image" width="37" height="33">
-                      <use xlinkHref="#icon-star"></use>
-                    </svg>
-                  </label>
-                </div>
+                <RatingList onChangeRating={handleChangeRating} />
                 <textarea
                   className="reviews__textarea form__textarea"
                   id="review"
                   name="review"
                   placeholder="Tell how was your stay, what you like and what can be improved"
+                  onChange={(evt) => handleChangeComment(evt)}
                 >
                 </textarea>
                 <div className="reviews__button-wrapper">
