@@ -1,7 +1,7 @@
 import {Hostel} from '../types/hostel';
-import {Citys} from '../types/city';
+import {Cities} from '../types/city';
 
-export const groupByCity = (offers:Hostel[]): Citys => [...offers].reduce((acc:Citys, curr:Hostel) => {
+export const groupByCity = (offers:Hostel[]): Cities => [...offers].reduce((acc:Cities, curr:Hostel) => {
   acc[curr.city.name].push(curr);
   return acc;
 }, {

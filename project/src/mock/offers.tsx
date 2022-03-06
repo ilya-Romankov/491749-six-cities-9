@@ -5,8 +5,8 @@ export const offers: Hostel[] = [
     bedrooms: 5,
     city: {
       location: {
-        latitude: 52.370216,
-        longitude: 4.895168,
+        latitude: 52.3909553943508,
+        longitude: 4.85309666406198,
         zoom: 10,
       },
       name: 'Paris',
@@ -29,8 +29,8 @@ export const offers: Hostel[] = [
     isFavorite: true,
     isPremium: false,
     location: {
-      latitude: 22.35514938496378,
-      longitude: 8.673877537499948,
+      latitude: 52.369553943508,
+      longitude: 4.85309666406198,
       zoom: 8,
     },
     maxAdults: 2,
@@ -68,8 +68,8 @@ export const offers: Hostel[] = [
     isFavorite: true,
     isPremium: false,
     location: {
-      latitude: 22.35514938496378,
-      longitude: 8.673877537499948,
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
       zoom: 8,
     },
     maxAdults: 2,

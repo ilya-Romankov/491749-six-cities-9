@@ -1,5 +1,8 @@
-import ListMain from '../list-main/list-main';
+import {useState} from 'react';
 import {Hostel} from '../../types/hostel';
+import {CityLeaflet} from '../../types/city';
+import ListMain from '../list-main/list-main';
+import Map from '../map/map';
 
 type MainScreenProps = {
   hostels: Hostel[];
@@ -7,6 +10,13 @@ type MainScreenProps = {
 
 function MainScreen({hostels}: MainScreenProps): JSX.Element {
   const offersCount = hostels.length;
+  const [activeCard, setActiveCard] = useState<Hostel | undefined>(undefined);
+  const [cityLeaflet] = useState<CityLeaflet>({
+    latitude: 52.370216,
+    longitude: 4.895168,
+    zoom: 10,
+    name: 'Amsterdam',
+  });
 
   return (
     <main className="page__main page__main--index">
@@ -68,10 +78,10 @@ function MainScreen({hostels}: MainScreenProps): JSX.Element {
               </ul>
             </form>
 
-            <ListMain hostels={hostels} />
+            <ListMain hostels={hostels} getActiveCard={setActiveCard} />
           </section>
           <div className="cities__right-section">
-            <section className="cities__map map"></section>
+            <Map city={cityLeaflet} hostels={hostels} activeHostel={activeCard} />
           </div>
         </div>
       </div>
