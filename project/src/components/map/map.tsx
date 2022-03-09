@@ -2,10 +2,12 @@ import {useEffect, useRef} from 'react';
 import useMap from '../../hooks/useMap';
 import {CityLeaflet} from '../../types/city';
 import {Hostel} from '../../types/hostel';
-import DefaultPin from '../../assets/pin.svg';
-import ActivePin from '../../assets/pin-active.svg';
+import {getIcon} from '../../helper/getIcon';
+import DefaultPin from './../../assets/pin.svg';
+import ActivePin from './../../assets/pin-active.svg';
 import {Icon, Marker} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+
 
 type MapProps = {
   city: CityLeaflet,
@@ -13,17 +15,9 @@ type MapProps = {
   activeHostel: Hostel | undefined;
 };
 
-const defaultCustomIcon = new Icon({
-  iconUrl: DefaultPin,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
-});
+const defaultCustomIcon = new Icon({...getIcon(DefaultPin)});
 
-const currentCustomIcon = new Icon({
-  iconUrl: ActivePin,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
-});
+const currentCustomIcon = new Icon({...getIcon(ActivePin)});
 
 function Map({city, hostels, activeHostel}: MapProps): JSX.Element {
   const mapRef = useRef<HTMLElement |  null>(null);

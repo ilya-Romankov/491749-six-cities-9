@@ -1,4 +1,5 @@
 import {ClassesOnPage} from './types/classes';
+import {CityLeaflet} from './types/city';
 
 export enum AppRoute {
   Main = '/',
@@ -28,4 +29,11 @@ export enum AuthorizationStatus {
 
 export const RatingValue: string[] = ['5', '4', '3', '2', '1'];
 
+export const Amsterdam: CityLeaflet = {
+  latitude: 52.370216,
+  longitude: 4.895168,
+  zoom: 10,
+  name: 'Amsterdam',
+};
 
+export const LinkForLeaflet = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';

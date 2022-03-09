@@ -7,6 +7,6 @@ export type Cities = {
   [key: string]: Hostel[]
 }
 
-export type CityLeaflet  = Location & {
+export type CityLeaflet = Location & {
   name: CityName;
 }
