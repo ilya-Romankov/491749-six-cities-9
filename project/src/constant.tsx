@@ -1,3 +1,6 @@
+import {ClassesOnPage} from './types/classes';
+import {CityLeaflet} from './types/city';
+
 export enum AppRoute {
   Main = '/',
   Sign_In = '/login',
@@ -6,6 +9,18 @@ export enum AppRoute {
   Not_Found = '*'
 }
 
+export const classesOnPage: ClassesOnPage = {
+  [AppRoute.Main]: {
+    mainPage: 'page page--gray page--main',
+  },
+  [AppRoute.Sign_In]: {
+    mainPage: 'page page--gray page--login',
+  },
+  [AppRoute.Favorites]: {
+    mainPage: 'page',
+  },
+};
+
 export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
@@ -13,3 +28,12 @@ export enum AuthorizationStatus {
 }
 
 export const RatingValue: string[] = ['5', '4', '3', '2', '1'];
+
+export const Amsterdam: CityLeaflet = {
+  latitude: 52.370216,
+  longitude: 4.895168,
+  zoom: 10,
+  name: 'Amsterdam',
+};
+
+export const LinkForLeaflet = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
