@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {Hostel} from '../../types/hostel';
 import {CityLeaflet} from '../../types/city';
-import ListMain from '../list-main/list-main';
+import ListHostel from '../list-hostel/list-hostel';
 import Map from '../map/map';
 import {Amsterdam} from '../../constant';
 
@@ -74,7 +74,7 @@ function MainScreen({hostels}: MainScreenProps): JSX.Element {
               </ul>
             </form>
 
-            <ListMain hostels={hostels} getActiveCard={setActiveCard} />
+            <ListHostel hostels={hostels} getActiveCard={setActiveCard} />
           </section>
           <div className="cities__right-section">
             <Map city={cityLeaflet} hostels={hostels} activeHostel={activeCard} />

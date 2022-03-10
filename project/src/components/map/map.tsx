@@ -42,7 +42,7 @@ function Map({city, hostels, activeHostel}: MapProps): JSX.Element {
   }, [map, hostels, activeHostel]);
 
   return (
-    <section ref={mapRef} className="cities__map map">
+    <section style={{width: '100%', height: '100%'}} ref={mapRef} className="cities__map map">
 
     </section>
   );

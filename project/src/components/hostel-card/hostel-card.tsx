@@ -4,14 +4,15 @@ import {Hostel} from '../../types/hostel';
 type HostelCardProps = {
   hostel: Hostel;
   getActiveCard: () => void;
+  classes: string;
 }
 
-function HostelCard({hostel,  getActiveCard}: HostelCardProps): JSX.Element {
+function HostelCard({hostel,  getActiveCard, classes}: HostelCardProps): JSX.Element {
   const {previewImage, price, title, type, id} = hostel;
 
   return (
     <article
-      className="cities__place-card place-card"
+      className={classes}
       onMouseOver={getActiveCard}
     >
       <div className="place-card__mark">
