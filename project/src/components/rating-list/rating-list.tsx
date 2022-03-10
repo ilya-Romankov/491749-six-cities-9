@@ -1,5 +1,5 @@
 import RatingStar from '../rating-star/rating-star';
-import {RatingValue} from '../../constant';
+import {RATING_VALUE} from '../../constant';
 import {ChangeEvent} from 'react';
 
 type RatingListProps = {
@@ -9,7 +9,7 @@ type RatingListProps = {
 function RatingList({onChangeRating}: RatingListProps): JSX.Element {
   return (
     <div className="reviews__rating-form form__rating">
-      {RatingValue.map((rating) => (
+      {RATING_VALUE.map((rating) => (
         <RatingStar
           key={rating}
           onChangeRating={onChangeRating}

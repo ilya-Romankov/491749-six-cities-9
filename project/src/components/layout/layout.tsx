@@ -1,18 +1,18 @@
 import {useEffect, useState} from 'react';
 import {Outlet, useLocation} from 'react-router-dom';
-import {getActiveClass} from '../../helper/getActiveClass';
+import {getClass} from '../../helper/getClass';
 import Header from '../header/header';
 import Footer from '../footer/footer';
 
 
 function Layout(): JSX.Element {
   const path = useLocation();
-  const [activeClasses, setActiveClasses] = useState(getActiveClass(path.pathname));
+  const [activeClasses, setActiveClasses] = useState(getClass(path.pathname));
 
-  useEffect(() => setActiveClasses(getActiveClass(path.pathname)), [path]);
+  useEffect(() => setActiveClasses(getClass(path.pathname)), [path]);
 
   return (
-    <div className={activeClasses.mainPage}>
+    <div className={activeClasses.activeClasses}>
       <Header />
       <Outlet />
       <Footer />
