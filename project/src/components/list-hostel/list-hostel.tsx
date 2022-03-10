@@ -6,12 +6,12 @@ import {ChildAndParentClassesHostelList} from '../../types/classes';
 import {getClassOnHostelList} from '../../helper/getClass';
 import {classesOnHostelList} from '../../constant';
 
-type ListOfferProps = {
+type ListHostelProps = {
   hostels: Hostel[]
   getActiveCard: (hostel: Hostel) => void;
 }
 
-function ListHostel({hostels, getActiveCard}: ListOfferProps): JSX.Element {
+function ListHostel({hostels, getActiveCard}: ListHostelProps): JSX.Element {
   const currentPath = useLocation().pathname;
   const [activeClasses, setActiveClasses] = useState<ChildAndParentClassesHostelList>(classesOnHostelList.mainList);
 

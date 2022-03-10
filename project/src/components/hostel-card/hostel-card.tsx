@@ -12,7 +12,7 @@ function HostelCard({hostel,  getActiveCard, classes}: HostelCardProps): JSX.Ele
 
   return (
     <article
-      className={`${classes}`}
+      className={classes}
       onMouseOver={getActiveCard}
     >
       <div className="place-card__mark">

@@ -18,7 +18,7 @@ function ReviewsItem({commentData}: ReviewsItemProps): JSX.Element {
           <img
             style={{height: '100%'}}
             className="reviews__avatar user__avatar"
-            src={`${avatarUrl}`}
+            src={avatarUrl}
             width="54"
             height="54"
             alt="Reviews avatar"
@@ -38,7 +38,7 @@ function ReviewsItem({commentData}: ReviewsItemProps): JSX.Element {
         <p className="reviews__text">
           {comment}
         </p>
-        <time className="reviews__time" dateTime={`${date}`}>{getFormatDate(date)}</time>
+        <time className="reviews__time" dateTime={date.toString()}>{getFormatDate(date)}</time>
       </div>
     </li>
   );
