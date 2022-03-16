@@ -10,6 +10,15 @@ export enum AppRoute {
   Not_Found = '*'
 }
 
+export enum Cities {
+  PARIS = 'Paris',
+  COLOGNE = 'Cologne',
+  BRUSSELS = 'Brussels',
+  AMSTERDAM = 'Amsterdam',
+  HAMBURG = 'Hamburg',
+  DUSSELDORF = 'Dusseldorf',
+}
+
 export const classesOnPage: ClassesOnPage = {
   [AppRoute.Main]: {
     activeClasses: 'page page--gray page--main',
