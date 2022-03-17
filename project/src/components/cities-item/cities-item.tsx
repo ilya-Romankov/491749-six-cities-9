@@ -1,18 +1,28 @@
-import {CityName} from '../../types/city';
 import {MouseEvent} from 'react';
+import {currentCity} from '../../store/action';
+import {CityName} from '../../types/city';
+import {useAppDispatch} from '../../hooks/useAppDispatch';
+import {useAppSelector} from '../../hooks/useAppSelector';
 
 type CitiesItemProps = {
   city: CityName;
-  isActiveClass: boolean;
-  setActiveCity: (evt: MouseEvent<HTMLAnchorElement>, city: CityName) => void,
 }
 
-function CitiesItem({city, isActiveClass, setActiveCity}: CitiesItemProps): JSX.Element {
+function CitiesItem({city}: CitiesItemProps): JSX.Element {
+  const dispatch = useAppDispatch();
+
+  const handlerChangeCity = (evt: MouseEvent<HTMLAnchorElement>): void => {
+    evt.preventDefault();
+    dispatch(currentCity(city));
+  };
+
+  const currentCityOnPage = useAppSelector((state) => state.currentCity);
+
   return (
     <li className="locations__item">
       <a
-        onClick={(evt) => setActiveCity(evt, city)}
-        className={`locations__item-link tabs__item ${isActiveClass ? 'tabs__item tabs__item--active' : ''}`}
+        onClick={(evt) => handlerChangeCity(evt)}
+        className={`locations__item-link tabs__item ${ currentCityOnPage === city ? 'tabs__item tabs__item--active' : ''}`}
         href="/"
       >
         <span>

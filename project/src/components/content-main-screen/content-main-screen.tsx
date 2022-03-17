@@ -1,16 +1,15 @@
 import {useState} from 'react';
 import ListHostel from '../list-hostel/list-hostel';
 import Map from '../map/map';
+import {useAppSelector} from '../../hooks/useAppSelector';
 import {CityLeaflet} from '../../types/city';
 import {Hostel} from '../../types/hostel';
 import {Amsterdam} from '../../constant';
 
-type ContentMainScreenProps = {
-  hostels: Hostel[];
-}
-
-function ContentMainScreen({hostels}: ContentMainScreenProps): JSX.Element {
-  const offersCount = hostels.length;
+function ContentMainScreen(): JSX.Element {
+  const currentCityOnPage = useAppSelector((state) => state.currentCity);
+  const groupCity = useAppSelector((state) => state.groupCities[currentCityOnPage]);
+  const offersCount = groupCity.length;
   const [activeCard, setActiveCard] = useState<Hostel | undefined>(undefined);
   const [cityLeaflet] = useState<CityLeaflet>(Amsterdam);
 
@@ -36,10 +35,10 @@ function ContentMainScreen({hostels}: ContentMainScreenProps): JSX.Element {
             </ul>
           </form>
 
-          <ListHostel hostels={hostels} getActiveCard={setActiveCard}/>
+          <ListHostel hostels={groupCity} getActiveCard={setActiveCard}/>
         </section>
         <div className="cities__right-section">
-          <Map city={cityLeaflet} hostels={hostels} activeHostel={activeCard}/>
+          <Map city={cityLeaflet} hostels={groupCity} activeHostel={activeCard}/>
         </div>
       </div>
     </div>

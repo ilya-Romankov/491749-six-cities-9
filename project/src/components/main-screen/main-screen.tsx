@@ -10,7 +10,7 @@ type MainScreenProps = {
 
 function MainScreen({hostels}: MainScreenProps): JSX.Element {
   const currentCityOnPage = useAppSelector((state) => state.currentCity);
-  const currentHostels = hostels.filter((hostel) => currentCityOnPage === hostel.city.name);
+  const groupCity = useAppSelector((state) => state.groupCities[currentCityOnPage]);
 
   return (
     <main className="page__main page__main--index">
@@ -18,7 +18,7 @@ function MainScreen({hostels}: MainScreenProps): JSX.Element {
       <div className="tabs">
         <CitiesList />
       </div>
-      {currentHostels.length !== 0 ? <ContentMainScreen hostels={currentHostels} /> : <EmptyMainScreen />}
+      {groupCity.length !== 0 ? <ContentMainScreen /> : <EmptyMainScreen />}
     </main>
   );
 }
