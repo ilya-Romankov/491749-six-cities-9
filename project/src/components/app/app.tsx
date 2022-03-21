@@ -24,7 +24,7 @@ function App({hostels}:AppProps): JSX.Element {
         >
           <Route
             path={AppRoute.Main}
-            element={<MainScreen hostels={hostels} />}
+            element={<MainScreen />}
           />
           <Route
             path={AppRoute.Sign_In}

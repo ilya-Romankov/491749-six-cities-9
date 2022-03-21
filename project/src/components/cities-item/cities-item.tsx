@@ -1,8 +1,9 @@
 import {MouseEvent} from 'react';
-import {currentCity} from '../../store/action';
+import {currentCity, currentSort} from '../../store/action';
 import {CityName} from '../../types/city';
 import {useAppDispatch} from '../../hooks/useAppDispatch';
 import {useAppSelector} from '../../hooks/useAppSelector';
+import {SortKey} from '../../constant';
 
 type CitiesItemProps = {
   city: CityName;
@@ -14,6 +15,7 @@ function CitiesItem({city}: CitiesItemProps): JSX.Element {
   const handlerChangeCity = (evt: MouseEvent<HTMLAnchorElement>): void => {
     evt.preventDefault();
     dispatch(currentCity(city));
+    dispatch(currentSort(SortKey.POPULAR));
   };
 
   const currentCityOnPage = useAppSelector((state) => state.currentCity);

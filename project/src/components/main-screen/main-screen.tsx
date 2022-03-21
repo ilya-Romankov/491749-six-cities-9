@@ -1,14 +1,9 @@
 import CitiesList from '../cities-list/cities-list';
 import EmptyMainScreen from '../empty-main-screen/empty-main-screen';
 import ContentMainScreen from '../content-main-screen/content-main-screen';
-import {Hostel} from '../../types/hostel';
 import {useAppSelector} from '../../hooks/useAppSelector';
 
-type MainScreenProps = {
-  hostels: Hostel[];
-}
-
-function MainScreen({hostels}: MainScreenProps): JSX.Element {
+function MainScreen(): JSX.Element {
   const currentCityOnPage = useAppSelector((state) => state.currentCity);
   const groupCity = useAppSelector((state) => state.groupCities[currentCityOnPage]);
 
