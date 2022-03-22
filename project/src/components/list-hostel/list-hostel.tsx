@@ -16,12 +16,12 @@ type ListHostelProps = {
 function ListHostel({hostels, getActiveCard}: ListHostelProps): JSX.Element {
   const currentSortPage = useAppSelector((state)=> state.currentSort);
   const [sortHostels, setSortHostels] = useState<Hostel[]>([...hostels].sort(Sort[currentSortPage]));
-  const currentPath = useLocation().pathname;
+  const {pathname} = useLocation();
   const [activeClasses, setActiveClasses] = useState<ChildAndParentClassesHostelList>(classesOnHostelList.mainList);
 
   useEffect(() => {
-    setActiveClasses(getClassOnHostelList(currentPath));
-  }, [currentPath]);
+    setActiveClasses(getClassOnHostelList(pathname));
+  }, [pathname]);
 
   useEffect(() => {
     if (currentSortPage === SortKey.POPULAR) {
