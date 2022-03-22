@@ -1,7 +1,7 @@
 import {useAppSelector} from '../../hooks/useAppSelector';
-import {currentSortHandleChange} from "../../helper/dispatch";
-import {useAppDispatch} from "../../hooks/useAppDispatch";
-import {currentSort} from "../../store/action";
+import {currentSortHandleChange} from '../../helper/dispatch';
+import {useAppDispatch} from '../../hooks/useAppDispatch';
+import {currentSort} from '../../store/action';
 
 type SortItemProps = {
   title: string,

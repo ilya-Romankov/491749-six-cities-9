@@ -1,4 +1,4 @@
-import {SortKey} from "../constant";
+import {SortKey} from '../constant';
 
 export const currentSortHandleChange = (value: string) => {
   switch (value) {
@@ -10,5 +10,5 @@ export const currentSortHandleChange = (value: string) => {
       return SortKey.HIGH;
     case 'RATING':
       return SortKey.RARING;
-  };
+  }
 };
