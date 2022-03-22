@@ -1,6 +1,7 @@
 import {ClassesOnPage} from './types/classes';
 import {ClassesOnHostelList} from './types/classes';
 import {CityLeaflet} from './types/city';
+import {Sorts} from './types/sorts';
 
 export enum AppRoute {
   Main = '/',
@@ -64,3 +65,29 @@ export const INDEX_RATING = 20;
 export enum FormatDate {
   CommentDate = 'MMMM YYYY',
 }
+
+export const SortKey: Sorts = {
+  POPULAR: 'POPULAR',
+  HIGH: 'HIGH',
+  LOW: 'LOW',
+  RARING: 'RATING',
+};
+
+export const SortValue= {
+  [SortKey.POPULAR]: {
+    title: 'Popular',
+    value: SortKey.POPULAR,
+  },
+  [SortKey.HIGH]: {
+    title: 'Price: low to high',
+    value: SortKey.HIGH,
+  },
+  [SortKey.LOW]: {
+    title: 'Price: high to low',
+    value: SortKey.LOW,
+  },
+  [SortKey.RARING]: {
+    title: 'Top rated first',
+    value: SortKey.RARING,
+  },
+};
