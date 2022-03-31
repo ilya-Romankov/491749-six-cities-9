@@ -1,13 +1,14 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {currentCity, currentSort} from './action';
+import {currentCity, currentSort, loadHostels, requireAuthorization, setError} from './action';
 import {groupByCity} from '../helper/data-group';
-import {Cities, SortKey} from '../constant';
-import {offers} from '../mock/offers';
+import {Cities, SortKey, AuthorizationStatus} from '../constant';
 
 const initialState = {
   currentCity: Cities.PARIS,
   currentSort: SortKey.POPULAR,
-  groupCities: groupByCity(offers),
+  groupCities: groupByCity([]),
+  authorizationStatus: AuthorizationStatus.Unknown,
+  error: '',
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -17,6 +18,15 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(currentSort, (state, action) => {
       state.currentSort = action.payload;
+    })
+    .addCase(loadHostels, (state, action) => {
+      state.groupCities = groupByCity(action.payload);
+    })
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
+    })
+    .addCase(setError, (state, action) => {
+      state.error = action.payload;
     });
 });
 
