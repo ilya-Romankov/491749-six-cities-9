@@ -73,6 +73,12 @@ export const SortKey: Sorts = {
   RARING: 'RATING',
 };
 
+export enum HTTP_CODE {
+  BAD_REQUEST = 400,
+  UNAUTHORIZED = 401,
+  NOT_FOUND = 404,
+}
+
 export const SortValue= {
   [SortKey.POPULAR]: {
     title: 'Popular',
@@ -91,3 +97,11 @@ export const SortValue= {
     value: SortKey.RARING,
   },
 };
+
+export const BASE_URL = 'https://9.react.pages.academy/six-cities';
+
+export const REQUEST_TIMEOUT = 5000;
+
+export const AUTH_TOKEN_KEY_NAME = 'six-cities-token';
+
+export const TIMEOUT_SHOW_ERROR = 2000;
