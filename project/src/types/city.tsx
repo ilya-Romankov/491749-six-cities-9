@@ -10,3 +10,12 @@ export type Cities = {
 export type CityLeaflet = Location & {
   name: CityName;
 }
+
+export type AllCityType = {
+  PARIS: CityLeaflet,
+  AMSTERDAM: CityLeaflet,
+  COLOGNE: CityLeaflet,
+  BRUSSELS: CityLeaflet,
+  HAMBURG: CityLeaflet,
+  DUSSELDORF: CityLeaflet,
+}
