@@ -7,13 +7,20 @@ import FavoritesScreen from '../favorites-screen/favorites-screen';
 import PrivateRoute from '../private-route/private-route';
 import NotFound from '../not-found/not-found';
 import {Hostel} from '../../types/hostel';
-import {AppRoute, AuthorizationStatus} from '../../constant';
+import {AppRoute} from '../../constant';
+import {useAppSelector} from '../../hooks/useAppSelector';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 type AppProps = {
   hostels: Hostel[];
 }
 
 function App({hostels}:AppProps): JSX.Element {
+  const {authorizationStatus, isDataLoaded} = useAppSelector((state) => state);
+
+  if (!isDataLoaded) {
+    return <LoadingScreen />;
+  }
 
   return (
     <BrowserRouter>
@@ -37,7 +44,7 @@ function App({hostels}:AppProps): JSX.Element {
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+              <PrivateRoute authorizationStatus={authorizationStatus}>
                 <FavoritesScreen hostel={hostels} />
               </PrivateRoute>
             }

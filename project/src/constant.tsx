@@ -1,6 +1,6 @@
 import {ClassesOnPage} from './types/classes';
 import {ClassesOnHostelList} from './types/classes';
-import {CityLeaflet} from './types/city';
+import {CityLeaflet, AllCityType} from './types/city';
 import {Sorts} from './types/sorts';
 
 export enum AppRoute {
@@ -9,6 +9,11 @@ export enum AppRoute {
   Favorites = '/favorites',
   Room = '/offer/:id',
   Not_Found = '*'
+}
+
+export enum ApiRoute {
+  Hostels = '/hotels',
+  Logout = '/logout',
 }
 
 export enum Cities {
@@ -56,6 +61,45 @@ export const Amsterdam: CityLeaflet = {
   longitude: 4.895168,
   zoom: 10,
   name: 'Amsterdam',
+};
+
+export const AllCity: AllCityType = {
+  PARIS: {
+    latitude: 48.85661,
+    longitude: 2.351499,
+    zoom: 13,
+    name: 'Paris',
+  },
+  AMSTERDAM: {
+    latitude: 52.370216,
+    longitude: 4.895168,
+    zoom: 10,
+    name: 'Amsterdam',
+  },
+  COLOGNE: {
+    latitude: 50.938361,
+    longitude: 6.959974,
+    zoom: 13,
+    name: 'Cologne',
+  },
+  BRUSSELS: {
+    latitude: 50.846557,
+    longitude: 4.351697,
+    zoom: 13,
+    name: 'Brussels',
+  },
+  HAMBURG: {
+    latitude: 53.550341,
+    longitude: 10.000654,
+    zoom: 13,
+    name: 'Hamburg',
+  },
+  DUSSELDORF: {
+    latitude: 51.225402,
+    longitude: 6.776314,
+    zoom: 13,
+    name: 'Dusseldorf',
+  },
 };
 
 export const LINK_FOR_LEAFLET = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';

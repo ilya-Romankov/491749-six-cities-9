@@ -4,9 +4,15 @@ import {CityLeaflet} from '../types/city';
 import {LINK_FOR_LEAFLET} from '../constant';
 
 function useMap(mapRef: MutableRefObject<HTMLElement | null>, city: CityLeaflet): Map | null {
+
   const [map, setMap] = useState<Map | null>(null);
 
   useEffect(() => {
+    if (mapRef.current !== null && map !== null) {
+      map.panTo([city.latitude, city.longitude]);
+      map.setZoom(city.zoom);
+    }
+
     if (mapRef.current !== null && map === null) {
       const instance = new Map(mapRef.current, {
         center: {
@@ -27,6 +33,7 @@ function useMap(mapRef: MutableRefObject<HTMLElement | null>, city: CityLeaflet)
 
       setMap(instance);
     }
+
   }, [mapRef, map, city]);
 
   return map;

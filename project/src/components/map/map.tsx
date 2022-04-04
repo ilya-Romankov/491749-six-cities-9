@@ -8,7 +8,6 @@ import ActivePin from './../../assets/pin-active.svg';
 import {Icon, Marker} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-
 type MapProps = {
   city: CityLeaflet,
   hostels: Hostel[],
@@ -24,7 +23,7 @@ function Map({city, hostels, activeHostel}: MapProps): JSX.Element {
   const map = useMap(mapRef, city);
 
   useEffect(() => {
-    if (map) {
+    if (map !== null) {
       hostels.forEach((point) => {
         const marker = new Marker({
           lat: point.location.latitude,
@@ -33,13 +32,13 @@ function Map({city, hostels, activeHostel}: MapProps): JSX.Element {
 
         marker
           .setIcon(
-            activeHostel !== undefined && point.city.name === activeHostel.city.name
+            activeHostel !== undefined && point.id === activeHostel.id
               ? currentCustomIcon
               : defaultCustomIcon,
           ).addTo(map);
       });
     }
-  }, [map, hostels, activeHostel]);
+  }, [city,map, hostels, activeHostel]);
 
   return (
     <section style={{width: '100%', height: '100%'}} ref={mapRef} className="cities__map map">

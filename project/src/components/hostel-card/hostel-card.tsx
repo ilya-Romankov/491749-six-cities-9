@@ -8,16 +8,17 @@ type HostelCardProps = {
 }
 
 function HostelCard({hostel,  getActiveCard, classes}: HostelCardProps): JSX.Element {
-  const {previewImage, price, title, type, id} = hostel;
+  const {previewImage, price, title, type, id, isPremium} = hostel;
 
   return (
     <article
       className={classes}
       onMouseOver={getActiveCard}
     >
-      <div className="place-card__mark">
-        <span>Premium</span>
-      </div>
+      {isPremium &&
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div>}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={`/offer/${id}`}>
           <img

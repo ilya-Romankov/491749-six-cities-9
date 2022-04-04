@@ -1,6 +1,19 @@
 import {Link} from 'react-router-dom';
+import {MouseEvent} from 'react';
+import {useAppSelector} from '../../hooks/useAppSelector';
+import {AppRoute, AuthorizationStatus} from '../../constant';
+import {useDispatch} from 'react-redux';
+import {logoutAction} from '../../store/api-action';
 
 function Header(): JSX.Element {
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const dispatch = useDispatch();
+
+  const logoutHandler = (evt: MouseEvent<HTMLAnchorElement>): void => {
+    evt.preventDefault();
+    dispatch(logoutAction());
+  };
+
   return (
     <header className='header'>
       <div className="container">
@@ -15,22 +28,39 @@ function Header(): JSX.Element {
               />
             </Link>
           </div>
-          <nav className="header__nav">
-            <ul className="header__nav-list">
-              <li className="header__nav-item user">
-                <a className="header__nav-link header__nav-link--profile" href="/">
-                  <div className="header__avatar-wrapper user__avatar-wrapper">
-                  </div>
-                  <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                </a>
-              </li>
-              <li className="header__nav-item">
-                <a className="header__nav-link" href="/">
-                  <span className="header__signout">Sign out</span>
-                </a>
-              </li>
-            </ul>
-          </nav>
+          {authorizationStatus === AuthorizationStatus.Auth  ?
+            <nav className="header__nav">
+              <ul className="header__nav-list">
+                <li className="header__nav-item user">
+                  <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
+                    <div className="header__avatar-wrapper user__avatar-wrapper">
+                    </div>
+                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                  </Link>
+                </li>
+                <li className="header__nav-item">
+                  <a
+                    className="header__nav-link"
+                    href="/"
+                    onClick={(evt) => logoutHandler(evt)}
+                  >
+                    <span className="header__signout">Sign out</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+            :
+            <nav className="header__nav">
+              <ul className="header__nav-list">
+                <li className="header__nav-item user">
+                  <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Sign_In}>
+                    <div className="header__avatar-wrapper user__avatar-wrapper">
+                    </div>
+                    <span className="header__login">Sign in</span>
+                  </Link>
+                </li>
+              </ul>
+            </nav>}
         </div>
       </div>
     </header>

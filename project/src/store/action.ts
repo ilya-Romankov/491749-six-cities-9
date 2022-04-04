@@ -4,6 +4,8 @@ import {AuthorizationStatus} from '../constant';
 
 export const currentCity = createAction('mainScreen/currentCity', (city) => ({payload: city}));
 
+export const currentDataCity = createAction('mainScreen/currentDataCity', (cityData) => ({payload: cityData}));
+
 export const currentSort = createAction('mainScreen/currentSort', (sort) => ({payload: sort}));
 
 export const loadHostels = createAction<Hostel[]>('data/loadHostels');
