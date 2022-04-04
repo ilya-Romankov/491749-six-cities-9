@@ -2,8 +2,9 @@ import {useState} from 'react';
 import ListHostel from '../list-hostel/list-hostel';
 import Map from '../map/map';
 import SortList from '../sort-list/sort-list';
-import {useAppSelector} from '../../hooks/useAppSelector';
 import {Hostel} from '../../types/hostel';
+import {useAppSelector} from '../../hooks/useAppSelector';
+
 
 function ContentMainScreen(): JSX.Element {
   const {currentCity, currentDataCity} = useAppSelector((state) => state);
