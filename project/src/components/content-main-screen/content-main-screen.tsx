@@ -5,7 +5,6 @@ import SortList from '../sort-list/sort-list';
 import {Hostel} from '../../types/hostel';
 import {useAppSelector} from '../../hooks/useAppSelector';
 
-
 function ContentMainScreen(): JSX.Element {
   const {currentCity, currentDataCity} = useAppSelector((state) => state);
   const groupCity = useAppSelector((state) => state.groupCities[currentCity]);

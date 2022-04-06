@@ -2,6 +2,7 @@ import {ClassesOnPage} from './types/classes';
 import {ClassesOnHostelList} from './types/classes';
 import {CityLeaflet, AllCityType} from './types/city';
 import {Sorts} from './types/sorts';
+import {Hostel} from './types/hostel';
 
 export enum AppRoute {
   Main = '/',
@@ -14,6 +15,7 @@ export enum AppRoute {
 export enum ApiRoute {
   Hostels = '/hotels',
   Logout = '/logout',
+  Comments = '/comments',
 }
 
 export enum Cities {
@@ -35,6 +37,41 @@ export const classesOnPage: ClassesOnPage = {
   [AppRoute.Favorites]: {
     activeClasses: 'page',
   },
+};
+
+export const emptyHostel: Hostel = {
+  bedrooms: 0,
+  city: {
+    location: {
+      latitude: 0,
+      longitude: 0,
+      zoom: 0,
+    },
+    name: 'Paris',
+  },
+  description: '',
+  goods: [],
+  host: {
+    avatarUrl: '',
+    id: 0,
+    isPro: false,
+    name: '',
+  },
+  id: 0,
+  images: [],
+  isFavorite: false,
+  isPremium: false,
+  location: {
+    latitude: 0,
+    longitude: 0,
+    zoom: 0,
+  },
+  maxAdults: 0,
+  previewImage: '',
+  price: 0,
+  rating: 0,
+  title: '0',
+  type: '0',
 };
 
 export const classesOnHostelList: ClassesOnHostelList = {

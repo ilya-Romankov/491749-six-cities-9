@@ -18,7 +18,8 @@ const defaultCustomIcon = new Icon({...getIcon(DefaultPin)});
 
 const currentCustomIcon = new Icon({...getIcon(ActivePin)});
 
-function Map({city, hostels, activeHostel}: MapProps): JSX.Element {
+function Map({city, hostels, activeHostel}: MapProps): JSX.Element | null {
+
   const mapRef = useRef<HTMLElement |  null>(null);
   const map = useMap(mapRef, city);
 
