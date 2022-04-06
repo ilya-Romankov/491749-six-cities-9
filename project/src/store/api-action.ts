@@ -1,13 +1,20 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
+import {dropToken, saveToken} from '../services/token';
 import {api, store} from './index';
-import {loadHostels, requireAuthorization, setError} from './action';
+import {
+  loadComments,
+  loadCurrentHostels,
+  loadHostels,
+  loadNearbyHostels,
+  requireAuthorization,
+  setError
+} from './action';
+import {Comments, SendComment} from '../types/comment';
 import {Hostel} from '../types/hostel';
 import {AuthData} from '../types/auth-data';
 import {UserData} from '../types/user-data';
-import {dropToken, saveToken} from '../services/token';
-import {ApiRoute, AppRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR} from '../constant';
 import {errorHandle} from '../helper/error';
-
+import {ApiRoute, AppRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR} from '../constant';
 
 export const fetchHostelsAction = createAsyncThunk(
   'data/fetchHostels',
@@ -15,6 +22,42 @@ export const fetchHostelsAction = createAsyncThunk(
     try {
       const {data} = await api.get<Hostel[]>(ApiRoute.Hostels);
       store.dispatch(loadHostels(data));
+    } catch (e) {
+      errorHandle(e);
+    }
+  },
+);
+
+export const fetchCurrentHostelAction = createAsyncThunk(
+  'data/fetchCurrentHostel',
+  async (id: number) => {
+    try {
+      const {data} = await api.get<Hostel>(`${ApiRoute.Hostels}/${id}`);
+      store.dispatch(loadCurrentHostels(data));
+    } catch (e) {
+      errorHandle(e);
+    }
+  },
+);
+
+export const fetchCommentAction = createAsyncThunk(
+  'data/fetchComment',
+  async (id: number) => {
+    try {
+      const {data} = await api.get<Comments>(`${ApiRoute.Comments}/${id}`);
+      store.dispatch(loadComments(data));
+    } catch (e) {
+      errorHandle(e);
+    }
+  },
+);
+
+export const fetchNearbyHostelsAction = createAsyncThunk(
+  'data/fetchNearbyHostels',
+  async (id: number) => {
+    try {
+      const {data} = await api.get<Hostel[]>(`${ApiRoute.Hostels}/${id}/nearby`);
+      store.dispatch(loadNearbyHostels(data));
     } catch (e) {
       errorHandle(e);
     }
@@ -53,6 +96,17 @@ export const loginAction = createAsyncThunk(
       const {data: {token}} = await api.post<UserData>(AppRoute.Sign_In, {email, password});
       saveToken(token);
       store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    } catch (e) {
+      errorHandle(e);
+    }
+  },
+);
+
+export const commentAction = createAsyncThunk(
+  'user/comment',
+  async ({comment, rating, id}: SendComment) => {
+    try {
+      await api.post<UserData>(`${ApiRoute.Comments}/${id}`, {comment, rating});
     } catch (e) {
       errorHandle(e);
     }

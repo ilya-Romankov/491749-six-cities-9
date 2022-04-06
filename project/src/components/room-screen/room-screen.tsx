@@ -1,62 +1,93 @@
-import {ChangeEvent, useState} from 'react';
+import {ChangeEvent, FormEvent, useEffect, useState} from 'react';
+import {useParams} from 'react-router-dom';
+import {useAppSelector} from '../../hooks/useAppSelector';
+import {store} from '../../store';
+import {
+  commentAction,
+  fetchCommentAction,
+  fetchCurrentHostelAction,
+  fetchNearbyHostelsAction
+} from '../../store/api-action';
+import {Hostel} from '../../types/hostel';
 import RatingList from '../rating-list/rating-list';
 import ReviewsList from '../reviews-list/reviews-list';
 import ListHostel from '../list-hostel/list-hostel';
 import Map from '../map/map';
-import {Hostel} from '../../types/hostel';
-import {CityLeaflet} from '../../types/city';
-import {Amsterdam} from '../../constant';
-import {offers} from '../../mock/offers';
-import {comments} from '../../mock/comments';
+
+import {AllCity, AuthorizationStatus, INDEX_RATING} from '../../constant';
+
 
 function RoomScreen(): JSX.Element {
-  const [, setComment] = useState<string>('');
-  const [, setRating] = useState<string>('');
+  const {id} = useParams();
+
+  useEffect(() => {
+    if (id) {
+      store.dispatch(fetchCurrentHostelAction(Number(id)));
+      store.dispatch(fetchCommentAction(Number(id)));
+      store.dispatch(fetchNearbyHostelsAction(Number(id)));
+    }
+  }, [id]);
+
+  const {currentHostel, comments, authorizationStatus, nearbyHostels} = useAppSelector((state) => state);
+  const {title, bedrooms, type, price, maxAdults, images, isPremium, rating, goods, description} = currentHostel;
+  const {name, isPro, avatarUrl} = currentHostel.host;
+  const ratingStar = Math.round(rating) * INDEX_RATING;
+  const actualCity = Object.values(AllCity).find((cityData) => cityData.name === currentHostel.city.name);
+
+  const [comment, setComment] = useState<string>('');
+  const [sendRating, setSendRating] = useState<string>('');
 
   const [activeCard, setActiveCard] = useState<Hostel | undefined>(undefined);
-  const [cityLeaflet] = useState<CityLeaflet>(Amsterdam);
 
   const handleChangeComment = (evt: ChangeEvent<HTMLTextAreaElement>): void => {
     setComment(evt.currentTarget.value);
   };
 
   const handleChangeRating = (evt: ChangeEvent<HTMLInputElement>): void => {
-    setRating(evt.currentTarget.value);
+    setSendRating(evt.currentTarget.value);
   };
 
-  const offer = offers[1];
-  const {title, bedrooms, type, price, maxAdults} = offer;
+  const checkValidation = ():boolean => {
+    if (comment === '' || comment.length < 50 || comment.length > 300 || sendRating === '') {
+      return false;
+    }
+
+    return true;
+  };
+
+  const sendCommentClickHandler = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+
+    if (id) {
+      store.dispatch(commentAction({
+        comment,
+        id,
+        rating: sendRating,
+      }));
+
+      store.dispatch(fetchCommentAction(Number(id)));
+      evt.currentTarget.reset();
+    }
+  };
 
   return (
     <main className="page__main page__main--property">
       <section className="property">
         <div className="property__gallery-container container">
           <div className="property__gallery">
-            <div className="property__image-wrapper">
-              <img className="property__image" src="img/room.jpg" alt="studio"/>
-            </div>
-            <div className="property__image-wrapper">
-              <img className="property__image" src="img/apartment-01.jpg" alt="studio"/>
-            </div>
-            <div className="property__image-wrapper">
-              <img className="property__image" src="img/apartment-02.jpg" alt="studio"/>
-            </div>
-            <div className="property__image-wrapper">
-              <img className="property__image" src="img/apartment-03.jpg" alt="studio"/>
-            </div>
-            <div className="property__image-wrapper">
-              <img className="property__image" src="img/studio-01.jpg" alt="studio"/>
-            </div>
-            <div className="property__image-wrapper">
-              <img className="property__image" src="img/apartment-01.jpg" alt="studio"/>
-            </div>
+            {images.map((image) => (
+              <div key={image} className="property__image-wrapper">
+                <img className="property__image" src={image} alt="studio"/>
+              </div>
+            ))}
           </div>
         </div>
         <div className="property__container container">
           <div className="property__wrapper">
-            <div className="property__mark">
-              <span>Premium</span>
-            </div>
+            {isPremium &&
+              <div className="property__mark">
+                <span>Premium</span>
+              </div>}
             <div className="property__name-wrapper">
               <h1 className="property__name">
                 {title}
@@ -70,10 +101,10 @@ function RoomScreen(): JSX.Element {
             </div>
             <div className="property__rating rating">
               <div className="property__stars rating__stars">
-                <span style={{width: '80%'}}></span>
+                <span style={{width: `${ratingStar}%`}}></span>
                 <span className="visually-hidden">Rating</span>
               </div>
-              <span className="property__rating-value rating__value">4.8</span>
+              <span className="property__rating-value rating__value">{rating}</span>
             </div>
             <ul className="property__features">
               <li className="property__feature property__feature--entire">
@@ -93,36 +124,10 @@ function RoomScreen(): JSX.Element {
             <div className="property__inside">
               <h2 className="property__inside-title">What`s inside</h2>
               <ul className="property__inside-list">
-                <li className="property__inside-item">
-                  Wi-Fi
-                </li>
-                <li className="property__inside-item">
-                  Washing machine
-                </li>
-                <li className="property__inside-item">
-                  Towels
-                </li>
-                <li className="property__inside-item">
-                  Heating
-                </li>
-                <li className="property__inside-item">
-                  Coffee machine
-                </li>
-                <li className="property__inside-item">
-                  Baby seat
-                </li>
-                <li className="property__inside-item">
-                  Kitchen
-                </li>
-                <li className="property__inside-item">
-                  Dishwasher
-                </li>
-                <li className="property__inside-item">
-                  Cabel TV
-                </li>
-                <li className="property__inside-item">
-                  Fridge
-                </li>
+                {goods.map((good) => (
+                  <li key={good} className="property__inside-item">
+                    {good}
+                  </li>))}
               </ul>
             </div>
             <div className="property__host">
@@ -131,63 +136,77 @@ function RoomScreen(): JSX.Element {
                 <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
                   <img
                     className="property__avatar user__avatar"
-                    src="img/avatar-angelina.jpg"
+                    src={avatarUrl}
                     width="74"
                     height="74"
                     alt="Host avatar"
                   />
                 </div>
                 <span className="property__user-name">
-                  Angelina
+                  {name}
                 </span>
-                <span className="property__user-status">
-                    Pro
-                </span>
+                {isPro &&
+                  <span className="property__user-status">
+                      Pro
+                  </span>}
               </div>
               <div className="property__description">
                 <p className="property__text">
-                  A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The
-                  building is green and from 18th century.
-                </p>
-                <p className="property__text">
-                  An independent House, strategically located between Rembrand Square and National Opera, but where
-                  the bustle of the city comes to rest in this alley flowery and colorful.
+                  {description}
                 </p>
               </div>
             </div>
             <section className="property__reviews reviews">
-              <h2 className="reviews__title">Reviews · <span className="reviews__amount">1</span></h2>
+              <h2 className="reviews__title">Reviews · <span className="reviews__amount">{comments.length}</span></h2>
               <ReviewsList comments={comments} />
-              <form className="reviews__form form" action="#" method="post">
-                <label className="reviews__label form__label" htmlFor="review">Your review</label>
-                <RatingList onChangeRating={handleChangeRating} />
-                <textarea
-                  className="reviews__textarea form__textarea"
-                  id="review"
-                  name="review"
-                  placeholder="Tell how was your stay, what you like and what can be improved"
-                  onChange={(evt) => handleChangeComment(evt)}
+              {authorizationStatus === AuthorizationStatus.Auth &&
+                <form
+                  className="reviews__form form"
+                  action="#"
+                  method="post"
+                  onSubmit={(evt) =>  sendCommentClickHandler(evt)}
                 >
-                </textarea>
-                <div className="reviews__button-wrapper">
-                  <p className="reviews__help">
-                    To submit review please make sure to set <span className="reviews__star">rating</span> and
-                    describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
-                  </p>
-                  <button className="reviews__submit form__submit button" type="submit" disabled>Submit</button>
-                </div>
-              </form>
+                  <label className="reviews__label form__label" htmlFor="review">Your review</label>
+                  <RatingList onChangeRating={handleChangeRating} />
+                  <textarea
+                    className="reviews__textarea form__textarea"
+                    id="review"
+                    name="review"
+                    placeholder="Tell how was your stay, what you like and what can be improved"
+                    onChange={(evt) => handleChangeComment(evt)}
+                  >
+                  </textarea>
+                  <div className="reviews__button-wrapper">
+                    <p className="reviews__help">
+                      To submit review please make sure to set <span className="reviews__star">rating</span> and
+                      describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
+                    </p>
+                    {!checkValidation() ?
+                      <button className="reviews__submit form__submit button" type="submit" disabled>
+                        Submit
+                      </button>
+                      :
+                      <button
+                        className="reviews__submit form__submit button"
+                        type="submit"
+                      >
+                        Submit
+                      </button>}
+                  </div>
+                </form>}
             </section>
           </div>
         </div>
         <div className="property__map map">
-          <Map city={cityLeaflet} hostels={offers} activeHostel={activeCard} />
+          {actualCity &&
+            <Map city={actualCity} hostels={nearbyHostels[currentHostel.city.name]} activeHostel={activeCard} />}
+
         </div>
       </section>
       <div className="container">
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
-          <ListHostel hostels={offers} getActiveCard={setActiveCard} />
+          <ListHostel hostels={nearbyHostels[currentHostel.city.name]} getActiveCard={setActiveCard} />
         </section>
       </div>
     </main>

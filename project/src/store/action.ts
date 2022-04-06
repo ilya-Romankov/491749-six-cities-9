@@ -10,6 +10,12 @@ export const currentSort = createAction('mainScreen/currentSort', (sort) => ({pa
 
 export const loadHostels = createAction<Hostel[]>('data/loadHostels');
 
+export const loadNearbyHostels = createAction<Hostel[]>('data/loadNearbyHostel');
+
+export const loadComments = createAction('data/loadComments', (comments) => ({payload: comments}));
+
+export const loadCurrentHostels = createAction('data/loadCurrentHostel', (hostel) => ({payload: hostel}));
+
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 
 export const setError = createAction<string>('game/setError');

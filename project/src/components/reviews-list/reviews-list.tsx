@@ -5,7 +5,11 @@ type ReviewsListProps = {
   comments: Comments[];
 }
 
-function ReviewsList({comments}: ReviewsListProps): JSX.Element {
+function ReviewsList({comments}: ReviewsListProps): JSX.Element | null {
+  if  (comments.length === 0) {
+    return null;
+  }
+
   return (
     <ul className="reviews__list">
       {comments.map((comment) => (

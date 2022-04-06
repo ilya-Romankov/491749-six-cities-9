@@ -1,13 +1,25 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {currentCity, currentSort, loadHostels, requireAuthorization, setError, currentDataCity} from './action';
+import {
+  currentCity,
+  currentSort,
+  loadHostels,
+  requireAuthorization,
+  setError,
+  currentDataCity,
+  loadCurrentHostels,
+  loadComments, loadNearbyHostels
+} from './action';
 import {groupByCity} from '../helper/data-group';
-import {Cities, SortKey, AuthorizationStatus, AllCity} from '../constant';
+import {Cities, SortKey, AuthorizationStatus, AllCity, emptyHostel} from '../constant';
 
 const initialState = {
   currentCity: Cities.PARIS,
   currentDataCity: AllCity.PARIS,
+  currentHostel: emptyHostel,
   currentSort: SortKey.POPULAR,
   groupCities: groupByCity([]),
+  nearbyHostels: groupByCity([]),
+  comments: [],
   authorizationStatus: AuthorizationStatus.Unknown,
   error: '',
   isDataLoaded: false,
@@ -33,6 +45,15 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(currentDataCity, (state, action) => {
       state.currentDataCity = action.payload;
+    })
+    .addCase(loadCurrentHostels, (state, action) => {
+      state.currentHostel = action.payload;
+    })
+    .addCase(loadComments, (state, action) => {
+      state.comments = action.payload;
+    })
+    .addCase(loadNearbyHostels, (state, action) => {
+      state.nearbyHostels = groupByCity(action.payload);
     });
 });
 
