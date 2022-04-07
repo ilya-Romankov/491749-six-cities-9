@@ -1,6 +1,6 @@
 import {ClassesOnPage} from './types/classes';
 import {ClassesOnHostelList} from './types/classes';
-import {CityLeaflet, AllCityType} from './types/city';
+import {AllCityType} from './types/city';
 import {Sorts} from './types/sorts';
 import {Hostel} from './types/hostel';
 
@@ -16,6 +16,7 @@ export enum ApiRoute {
   Hostels = '/hotels',
   Logout = '/logout',
   Comments = '/comments',
+  Favorite = '/favorite',
 }
 
 export enum Cities {
@@ -26,6 +27,8 @@ export enum Cities {
   HAMBURG = 'Hamburg',
   DUSSELDORF = 'Dusseldorf',
 }
+
+export const CityForRandom = [Cities.PARIS, Cities.COLOGNE, Cities.BRUSSELS, Cities.AMSTERDAM, Cities.HAMBURG, Cities.DUSSELDORF];
 
 export const classesOnPage: ClassesOnPage = {
   [AppRoute.Main]: {
@@ -91,14 +94,18 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
+export enum NameSpace {
+  Data = 'DATA',
+  User = 'USER',
+  City = 'CITY',
+}
+
+
 export const RATING_VALUE: string[] = ['5', '4', '3', '2', '1'];
 
-export const Amsterdam: CityLeaflet = {
-  latitude: 52.370216,
-  longitude: 4.895168,
-  zoom: 10,
-  name: 'Amsterdam',
-};
+export const DELETE_FAVORITE_PARAMETER = 0;
+
+export const ADD_FAVORITE_PARAMETER = 1;
 
 export const AllCity: AllCityType = {
   PARIS: {

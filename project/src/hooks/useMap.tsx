@@ -2,14 +2,19 @@ import {useEffect, useState, MutableRefObject} from 'react';
 import {Map, TileLayer} from 'leaflet';
 import {CityLeaflet} from '../types/city';
 import {LINK_FOR_LEAFLET} from '../constant';
+import {useLocation} from 'react-router-dom';
 
 function useMap(mapRef: MutableRefObject<HTMLElement | null>, city: CityLeaflet): Map | null {
-
+  const {pathname} = useLocation();
   const [map, setMap] = useState<Map | null>(null);
 
   useEffect(() => {
     if (mapRef.current !== null && map !== null) {
       map.panTo([city.latitude, city.longitude]);
+      map.setView({
+        lat: city.latitude,
+        lng: city.longitude,
+      });
       map.setZoom(city.zoom);
     }
 
@@ -34,7 +39,7 @@ function useMap(mapRef: MutableRefObject<HTMLElement | null>, city: CityLeaflet)
       setMap(instance);
     }
 
-  }, [mapRef, map, city]);
+  }, [mapRef, map, city, pathname]);
 
   return map;
 }

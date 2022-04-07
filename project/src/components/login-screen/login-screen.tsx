@@ -1,18 +1,18 @@
 import {FormEvent, useRef} from 'react';
-import {useNavigate} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 import {loginAction} from '../../store/api-action';
 import {AuthData} from '../../types/auth-data';
-import {useAppSelector} from '../../hooks/useAppSelector';
 import {AppRoute} from '../../constant';
+import {pickRandomCity} from '../../helper/random';
 
 function LoginScreen(): JSX.Element {
-  const currentCity = useAppSelector((state) => state.currentCity);
+  const navigate = useNavigate();
+
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
@@ -74,9 +74,9 @@ function LoginScreen(): JSX.Element {
         </section>
         <section className="locations locations--login locations--current">
           <div className="locations__item">
-            <a className="locations__item-link" href="/">
-              <span>{currentCity}</span>
-            </a>
+            <Link className="locations__item-link" to="/">
+              <span>{pickRandomCity()}</span>
+            </Link>
           </div>
         </section>
       </div>

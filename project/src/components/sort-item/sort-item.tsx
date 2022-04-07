@@ -1,7 +1,7 @@
 import {useAppSelector} from '../../hooks/useAppSelector';
 import {currentSortHandleChange} from '../../helper/dispatch';
 import {useAppDispatch} from '../../hooks/useAppDispatch';
-import {currentSort} from '../../store/action';
+import {currentSort} from '../../store/city-process/city-process';
 
 type SortItemProps = {
   title: string,
@@ -9,7 +9,7 @@ type SortItemProps = {
 }
 
 function SortItem({title, value}: SortItemProps): JSX.Element {
-  const currentSortPage = useAppSelector((state)=> state.currentSort);
+  const currentSortPage = useAppSelector(({CITY})=> CITY.currentSort);
   const dispatch = useAppDispatch();
 
   return (

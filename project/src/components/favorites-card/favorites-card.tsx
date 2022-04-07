@@ -1,12 +1,17 @@
 import {Link} from 'react-router-dom';
 import {Hostel} from '../../types/hostel';
+import AddFavorite from '../add-favorite/add-favorite';
 
 type FavoritesHostelProps = {
   cityName: string;
   hostels: Hostel[];
 }
 
-function FavoritesCard({cityName, hostels}: FavoritesHostelProps): JSX.Element {
+function FavoritesCard({cityName, hostels}: FavoritesHostelProps): JSX.Element | null {
+  if (hostels.length === 0) {
+    return null;
+  }
+
   return (
     <li className="favorites__locations-items">
       <div className="favorites__locations locations locations--current">
@@ -17,7 +22,7 @@ function FavoritesCard({cityName, hostels}: FavoritesHostelProps): JSX.Element {
         </div>
       </div>
       <div className="favorites__places">
-        {hostels.map(({id, price, previewImage, title, type}) => (
+        {hostels.map(({id, price, previewImage, title, type, isFavorite}) => (
           <article key={id} className="favorites__card place-card">
             <div className="favorites__image-wrapper place-card__image-wrapper">
               <Link to={`/offer/${id}`}>
@@ -36,12 +41,7 @@ function FavoritesCard({cityName, hostels}: FavoritesHostelProps): JSX.Element {
                   <b className="place-card__price-value">&euro;{price}</b>
                   <span className="place-card__price-text">&#47;&nbsp;night</span>
                 </div>
-                <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
-                  <svg className="place-card__bookmark-icon" width="18" height="19">
-                    <use xlinkHref="#icon-bookmark"></use>
-                  </svg>
-                  <span className="visually-hidden">In bookmarks</span>
-                </button>
+                <AddFavorite isFavorite={isFavorite} id={id}/>
               </div>
               <div className="place-card__rating rating">
                 <div className="place-card__stars rating__stars">

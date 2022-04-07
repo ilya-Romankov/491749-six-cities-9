@@ -1,9 +1,9 @@
 import {useAppSelector} from '../../hooks/useAppSelector';
 
 function ErrorMessage(): JSX.Element | null {
-  const {error} = useAppSelector((state) => state);
+  const {setError} = useAppSelector(({DATA}) => DATA);
 
-  if (error) {
+  if (setError) {
     return (
       <div
         style={{
@@ -16,7 +16,7 @@ function ErrorMessage(): JSX.Element | null {
           borderRadius: '5px',
         }}
       >
-        {error}
+        {setError}
       </div>
     );
   }

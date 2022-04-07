@@ -1,5 +1,6 @@
 import {Link} from 'react-router-dom';
 import {Hostel} from '../../types/hostel';
+import AddFavorite from '../add-favorite/add-favorite';
 
 type HostelCardProps = {
   hostel: Hostel;
@@ -8,7 +9,7 @@ type HostelCardProps = {
 }
 
 function HostelCard({hostel,  getActiveCard, classes}: HostelCardProps): JSX.Element {
-  const {previewImage, price, title, type, id, isPremium} = hostel;
+  const {previewImage, price, title, type, id, isPremium, isFavorite} = hostel;
 
   return (
     <article
@@ -36,12 +37,7 @@ function HostelCard({hostel,  getActiveCard, classes}: HostelCardProps): JSX.Ele
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button">
-            <svg className="place-card__bookmark-icon" width="18" height="19">
-              <use xlinkHref="#icon-bookmark"></use>
-            </svg>
-            <span className="visually-hidden">To bookmarks</span>
-          </button>
+          <AddFavorite id={id} isFavorite={isFavorite} />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">

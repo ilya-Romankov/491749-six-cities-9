@@ -1,4 +1,5 @@
 import {Route, BrowserRouter, Routes} from 'react-router-dom';
+import {useAppSelector} from '../../hooks/useAppSelector';
 import Layout from '../layout/layout';
 import MainScreen from '../main-screen/main-screen';
 import LoginScreen from '../login-screen/login-screen';
@@ -6,17 +7,13 @@ import RoomScreen from '../room-screen/room-screen';
 import FavoritesScreen from '../favorites-screen/favorites-screen';
 import PrivateRoute from '../private-route/private-route';
 import NotFound from '../not-found/not-found';
-import {Hostel} from '../../types/hostel';
 import {AppRoute} from '../../constant';
-import {useAppSelector} from '../../hooks/useAppSelector';
 import LoadingScreen from '../loading-screen/loading-screen';
+import PrivateRouteLogin from '../provate-route-login/private-route-login';
 
-type AppProps = {
-  hostels: Hostel[];
-}
-
-function App({hostels}:AppProps): JSX.Element {
-  const {authorizationStatus, isDataLoaded} = useAppSelector((state) => state);
+function App(): JSX.Element {
+  const {authorizationStatus} = useAppSelector(({USER}) => USER);
+  const {isDataLoaded} = useAppSelector(({DATA}) => DATA);
 
   if (!isDataLoaded) {
     return <LoadingScreen />;
@@ -35,7 +32,11 @@ function App({hostels}:AppProps): JSX.Element {
           />
           <Route
             path={AppRoute.Sign_In}
-            element={<LoginScreen />}
+            element={
+              <PrivateRouteLogin authorizationStatus={authorizationStatus}>
+                <LoginScreen />
+              </PrivateRouteLogin>
+            }
           />
           <Route
             path={AppRoute.Room}
@@ -45,7 +46,7 @@ function App({hostels}:AppProps): JSX.Element {
             path={AppRoute.Favorites}
             element={
               <PrivateRoute authorizationStatus={authorizationStatus}>
-                <FavoritesScreen hostel={hostels} />
+                <FavoritesScreen />
               </PrivateRoute>
             }
           />

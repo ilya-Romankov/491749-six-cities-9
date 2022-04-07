@@ -6,7 +6,7 @@ import {useDispatch} from 'react-redux';
 import {logoutAction} from '../../store/api-action';
 
 function Header(): JSX.Element {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const {authorizationStatus, emailUser} = useAppSelector(({USER}) => USER);
   const dispatch = useDispatch();
 
   const logoutHandler = (evt: MouseEvent<HTMLAnchorElement>): void => {
@@ -35,7 +35,7 @@ function Header(): JSX.Element {
                   <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                    <span className="header__user-name user__name">{emailUser}</span>
                   </Link>
                 </li>
                 <li className="header__nav-item">

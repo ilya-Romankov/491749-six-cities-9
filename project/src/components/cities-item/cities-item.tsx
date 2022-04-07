@@ -1,9 +1,9 @@
 import {MouseEvent} from 'react';
-import {currentCity, currentDataCity, currentSort} from '../../store/action';
 import {CityName} from '../../types/city';
 import {useAppDispatch} from '../../hooks/useAppDispatch';
 import {useAppSelector} from '../../hooks/useAppSelector';
 import {AllCity, SortKey} from '../../constant';
+import {currentCity, currentDataCity, currentSort} from '../../store/city-process/city-process';
 
 type CitiesItemProps = {
   city: CityName;
@@ -19,7 +19,7 @@ function CitiesItem({city}: CitiesItemProps): JSX.Element {
     dispatch(currentDataCity(Object.values(AllCity).find((cityData) => cityData.name === city)));
   };
 
-  const currentCityOnPage = useAppSelector((state) => state.currentCity);
+  const currentCityOnPage = useAppSelector(({CITY}) => CITY.currentCity);
 
   return (
     <li className="locations__item">

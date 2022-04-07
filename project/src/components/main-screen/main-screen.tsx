@@ -4,8 +4,8 @@ import ContentMainScreen from '../content-main-screen/content-main-screen';
 import {useAppSelector} from '../../hooks/useAppSelector';
 
 function MainScreen(): JSX.Element {
-  const currentCityOnPage = useAppSelector((state) => state.currentCity);
-  const groupCity = useAppSelector((state) => state.groupCities[currentCityOnPage]);
+  const currentCityOnPage = useAppSelector(({CITY}) => CITY.currentCity);
+  const groupCity = useAppSelector(({DATA}) => DATA.groupCities[currentCityOnPage]);
 
   return (
     <main className="page__main page__main--index">

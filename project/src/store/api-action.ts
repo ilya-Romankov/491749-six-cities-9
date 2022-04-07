@@ -1,27 +1,30 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {dropToken, saveToken} from '../services/token';
 import {api, store} from './index';
-import {
-  loadComments,
-  loadCurrentHostels,
-  loadHostels,
-  loadNearbyHostels,
-  requireAuthorization,
-  setError
-} from './action';
 import {Comments, SendComment} from '../types/comment';
 import {Hostel} from '../types/hostel';
 import {AuthData} from '../types/auth-data';
 import {UserData} from '../types/user-data';
+import {FavoriteData} from '../types/favorite-data';
 import {errorHandle} from '../helper/error';
 import {ApiRoute, AppRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR} from '../constant';
+import {groupByCity} from '../helper/data-group';
+import {
+  comments,
+  currentHostel,
+  setError,
+  groupHostels,
+  nearbyHostels,
+  favoritesHostel
+} from './data-process/data-process';
+import {emailUser, requireAuthorization} from './user-process/user-procces';
 
 export const fetchHostelsAction = createAsyncThunk(
   'data/fetchHostels',
   async () => {
     try {
       const {data} = await api.get<Hostel[]>(ApiRoute.Hostels);
-      store.dispatch(loadHostels(data));
+      store.dispatch(groupHostels(groupByCity(data)));
     } catch (e) {
       errorHandle(e);
     }
@@ -33,7 +36,7 @@ export const fetchCurrentHostelAction = createAsyncThunk(
   async (id: number) => {
     try {
       const {data} = await api.get<Hostel>(`${ApiRoute.Hostels}/${id}`);
-      store.dispatch(loadCurrentHostels(data));
+      store.dispatch(currentHostel(data));
     } catch (e) {
       errorHandle(e);
     }
@@ -45,7 +48,7 @@ export const fetchCommentAction = createAsyncThunk(
   async (id: number) => {
     try {
       const {data} = await api.get<Comments>(`${ApiRoute.Comments}/${id}`);
-      store.dispatch(loadComments(data));
+      store.dispatch(comments(data));
     } catch (e) {
       errorHandle(e);
     }
@@ -57,7 +60,31 @@ export const fetchNearbyHostelsAction = createAsyncThunk(
   async (id: number) => {
     try {
       const {data} = await api.get<Hostel[]>(`${ApiRoute.Hostels}/${id}/nearby`);
-      store.dispatch(loadNearbyHostels(data));
+      store.dispatch(nearbyHostels(groupByCity(data)));
+    } catch (e) {
+      errorHandle(e);
+    }
+  },
+);
+
+export const fetchFavoriteHostelsAction = createAsyncThunk(
+  'data/fetchFavoriteHostels',
+  async () => {
+    try {
+      const {data} = await api.get<Hostel[]>(ApiRoute.Favorite);
+      store.dispatch(favoritesHostel(data));
+    } catch (e) {
+      errorHandle(e);
+    }
+  },
+);
+
+export const editStatusHostelsAction = createAsyncThunk(
+  'data/editStatusHostels',
+  async ({id, status}: FavoriteData) => {
+    try {
+      await api.post(`${ApiRoute.Favorite}/${id}/${status}`);
+      store.dispatch(fetchHostelsAction());
     } catch (e) {
       errorHandle(e);
     }
@@ -93,8 +120,9 @@ export const loginAction = createAsyncThunk(
   'user/login',
   async ({login: email, password}: AuthData) => {
     try {
-      const {data: {token}} = await api.post<UserData>(AppRoute.Sign_In, {email, password});
-      saveToken(token);
+      const {data} = await api.post<UserData>(AppRoute.Sign_In, {email, password});
+      saveToken(data.token);
+      store.dispatch(emailUser(data.email));
       store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
     } catch (e) {
       errorHandle(e);

@@ -1,18 +1,21 @@
-import {Hostel} from '../../types/hostel';
-import FavoriteList from '../favorite-list/favorite-list';
+import {useEffect} from 'react';
+import {store} from '../../store';
+import FavoriteContent from '../favorite-content/favorite-content';
+import {useAppSelector} from '../../hooks/useAppSelector';
+import FavoriteEmpty from '../favorete-emty/favorite-empty';
+import {fetchFavoriteHostelsAction} from '../../store/api-action';
 
-type FavoritesScreenProps = {
-  hostel: Hostel[];
-}
+function FavoritesScreen(): JSX.Element {
+  useEffect(() => {
+    store.dispatch(fetchFavoriteHostelsAction());
+  }, []);
 
-function FavoritesScreen({hostel}: FavoritesScreenProps): JSX.Element {
+  const {favoritesHostel} = useAppSelector(({DATA}) => DATA);
+
   return (
     <main className="page__main page__main--favorites">
       <div className="page__favorites-container container">
-        <section className="favorites">
-          <h1 className="favorites__title">Saved listing</h1>
-          <FavoriteList hostels={hostel} />
-        </section>
+        {favoritesHostel.length !== 0 ? <FavoriteContent /> : <FavoriteEmpty />}
       </div>
     </main>
   );

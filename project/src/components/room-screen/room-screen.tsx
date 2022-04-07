@@ -13,9 +13,8 @@ import RatingList from '../rating-list/rating-list';
 import ReviewsList from '../reviews-list/reviews-list';
 import ListHostel from '../list-hostel/list-hostel';
 import Map from '../map/map';
-
 import {AllCity, AuthorizationStatus, INDEX_RATING} from '../../constant';
-
+import AddFavoriteRoom from '../add-favorite-room/add-favorite-room';
 
 function RoomScreen(): JSX.Element {
   const {id} = useParams();
@@ -28,8 +27,9 @@ function RoomScreen(): JSX.Element {
     }
   }, [id]);
 
-  const {currentHostel, comments, authorizationStatus, nearbyHostels} = useAppSelector((state) => state);
-  const {title, bedrooms, type, price, maxAdults, images, isPremium, rating, goods, description} = currentHostel;
+  const {currentHostel, comments, nearbyHostels} = useAppSelector(({DATA}) => DATA);
+  const {authorizationStatus} = useAppSelector(({USER}) => USER);
+  const {title, bedrooms, type, price, maxAdults, images, isPremium, rating, goods, description, isFavorite} = currentHostel;
   const {name, isPro, avatarUrl} = currentHostel.host;
   const ratingStar = Math.round(rating) * INDEX_RATING;
   const actualCity = Object.values(AllCity).find((cityData) => cityData.name === currentHostel.city.name);
@@ -92,12 +92,7 @@ function RoomScreen(): JSX.Element {
               <h1 className="property__name">
                 {title}
               </h1>
-              <button className="property__bookmark-button button" type="button">
-                <svg className="property__bookmark-icon" width="31" height="33">
-                  <use xlinkHref="#icon-bookmark"></use>
-                </svg>
-                <span className="visually-hidden">To bookmarks</span>
-              </button>
+              <AddFavoriteRoom isFavorite={isFavorite} id={currentHostel.id} />
             </div>
             <div className="property__rating rating">
               <div className="property__stars rating__stars">

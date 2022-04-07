@@ -14,7 +14,7 @@ type ListHostelProps = {
 }
 
 function ListHostel({hostels, getActiveCard}: ListHostelProps): JSX.Element {
-  const currentSortPage = useAppSelector((state)=> state.currentSort);
+  const currentSortPage = useAppSelector(({CITY})=> CITY.currentSort);
   const [sortHostels, setSortHostels] = useState<Hostel[]>([...hostels].sort(Sort[currentSortPage]));
   const {pathname} = useLocation();
   const [activeClasses, setActiveClasses] = useState<ChildAndParentClassesHostelList>(classesOnHostelList.mainList);

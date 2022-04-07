@@ -5,8 +5,6 @@ import {store} from './store';
 import App from './components/app/app';
 import ErrorMessage from './components/error-message/error-message';
 import {checkAuthAction, fetchHostelsAction} from './store/api-action';
-import {offers} from './mock/offers';
-
 
 store.dispatch(fetchHostelsAction());
 store.dispatch(checkAuthAction());
@@ -15,7 +13,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <ErrorMessage />
-      <App hostels={offers}/>
+      <App />
     </Provider>
 
   </React.StrictMode>,
