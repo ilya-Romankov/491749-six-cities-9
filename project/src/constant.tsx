@@ -88,6 +88,8 @@ export const classesOnHostelList: ClassesOnHostelList = {
   },
 };
 
+export const regExpForPassword = '^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])[^\\s]{8,}$';
+
 export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',

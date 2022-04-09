@@ -5,6 +5,7 @@ import {loginAction} from '../../store/api-action';
 import {AuthData} from '../../types/auth-data';
 import {AppRoute} from '../../constant';
 import {pickRandomCity} from '../../helper/random';
+import {checkPassword} from '../../helper/validate-data';
 
 function LoginScreen(): JSX.Element {
   const navigate = useNavigate();
@@ -21,7 +22,8 @@ function LoginScreen(): JSX.Element {
   const handleSubmit = (evt: FormEvent<HTMLFormElement>): void => {
     evt.preventDefault();
 
-    if (loginRef.current !== null && passwordRef.current !== null) {
+
+    if (loginRef.current !== null && passwordRef.current !== null && checkPassword(passwordRef.current.value)) {
       onSubmit({
         login: loginRef.current.value,
         password: passwordRef.current.value,

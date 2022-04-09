@@ -1,16 +1,21 @@
-import {Link} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import {MouseEvent} from 'react';
 import {useAppSelector} from '../../hooks/useAppSelector';
 import {AppRoute, AuthorizationStatus} from '../../constant';
 import {useDispatch} from 'react-redux';
-import {logoutAction} from '../../store/api-action';
+import { logoutAction} from '../../store/api-action';
 
 function Header(): JSX.Element {
   const {authorizationStatus, emailUser} = useAppSelector(({USER}) => USER);
   const dispatch = useDispatch();
+  const {id} = useParams();
 
-  const logoutHandler = (evt: MouseEvent<HTMLAnchorElement>): void => {
+  const handleLogout = (evt: MouseEvent<HTMLAnchorElement>): void => {
     evt.preventDefault();
+    if (id) {
+      dispatch(logoutAction(Number(id)));
+    }
+
     dispatch(logoutAction());
   };
 
@@ -42,7 +47,7 @@ function Header(): JSX.Element {
                   <a
                     className="header__nav-link"
                     href="/"
-                    onClick={(evt) => logoutHandler(evt)}
+                    onClick={(evt) => handleLogout(evt)}
                   >
                     <span className="header__signout">Sign out</span>
                   </a>

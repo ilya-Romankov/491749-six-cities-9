@@ -5,7 +5,7 @@ import {SortValue} from '../../constant';
 function SortList(): JSX.Element {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const isOpenHandleChange = () => {
+  const openIsOpenHandle = () => {
     setIsOpen(!isOpen);
   };
 
@@ -15,7 +15,7 @@ function SortList(): JSX.Element {
       <span
         className="places__sorting-type"
         tabIndex={0}
-        onClick={() => isOpenHandleChange()}
+        onClick={() => openIsOpenHandle()}
       >
         Popular
         <svg className="places__sorting-arrow" width="7" height="4">

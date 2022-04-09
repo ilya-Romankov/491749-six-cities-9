@@ -1,5 +1,5 @@
 import {store} from '../../store';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import {useAppSelector} from '../../hooks/useAppSelector';
 import {
   ADD_FAVORITE_PARAMETER,
@@ -7,7 +7,7 @@ import {
   AuthorizationStatus,
   DELETE_FAVORITE_PARAMETER
 } from '../../constant';
-import {editStatusHostelsAction, fetchFavoriteHostelsAction} from '../../store/api-action';
+import {editStatusHostelsAction, fetchFavoriteHostelsAction, fetchNearbyHostelsAction} from '../../store/api-action';
 
 type AddFavoriteProps = {
   isFavorite: boolean;
@@ -15,15 +15,21 @@ type AddFavoriteProps = {
 }
 
 function AddFavorite({isFavorite, id}: AddFavoriteProps): JSX.Element {
-
   const {authorizationStatus} = useAppSelector(({USER}) => USER);
   const navigate = useNavigate();
+  const currentParams = useParams();
 
   const status: number = isFavorite? DELETE_FAVORITE_PARAMETER : ADD_FAVORITE_PARAMETER;
 
-  const addFavoriteClickHandler = () => {
+  const handleAddFavoriteClick = () => {
+
     if (authorizationStatus === AuthorizationStatus.Auth) {
       store.dispatch(editStatusHostelsAction({id, status}));
+
+      if (currentParams.id) {
+        store.dispatch(fetchNearbyHostelsAction(Number(currentParams.id)));
+      }
+
       store.dispatch(fetchFavoriteHostelsAction());
       return;
     }
@@ -35,7 +41,7 @@ function AddFavorite({isFavorite, id}: AddFavoriteProps): JSX.Element {
     <button
       className={`place-card__bookmark-button button ${isFavorite ? 'place-card__bookmark-button--active' : ''}`}
       type="button"
-      onClick={addFavoriteClickHandler}
+      onClick={handleAddFavoriteClick}
     >
       <svg className='place-card__bookmark-icon' width='19' height='18'>
         <use xlinkHref="#icon-bookmark"></use>

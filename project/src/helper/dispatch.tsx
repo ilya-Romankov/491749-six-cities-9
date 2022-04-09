@@ -2,13 +2,13 @@ import {SortKey} from '../constant';
 
 export const currentSortHandleChange = (value: string) => {
   switch (value) {
-    case 'POPULAR':
+    case SortKey.POPULAR:
       return SortKey.POPULAR;
-    case 'LOW':
+    case SortKey.LOW:
       return SortKey.LOW;
-    case 'HIGH':
+    case SortKey.HIGH:
       return SortKey.HIGH;
-    case 'RATING':
+    case SortKey.RARING:
       return SortKey.RARING;
   }
 };

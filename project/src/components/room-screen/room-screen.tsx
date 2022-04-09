@@ -15,6 +15,7 @@ import ListHostel from '../list-hostel/list-hostel';
 import Map from '../map/map';
 import {AllCity, AuthorizationStatus, INDEX_RATING} from '../../constant';
 import AddFavoriteRoom from '../add-favorite-room/add-favorite-room';
+import {sortComments} from '../../helper/sorting';
 
 function RoomScreen(): JSX.Element {
   const {id} = useParams();
@@ -28,6 +29,7 @@ function RoomScreen(): JSX.Element {
   }, [id]);
 
   const {currentHostel, comments, nearbyHostels} = useAppSelector(({DATA}) => DATA);
+  const sortCommentsForPage = sortComments(comments);
   const {authorizationStatus} = useAppSelector(({USER}) => USER);
   const {title, bedrooms, type, price, maxAdults, images, isPremium, rating, goods, description, isFavorite} = currentHostel;
   const {name, isPro, avatarUrl} = currentHostel.host;
@@ -66,6 +68,8 @@ function RoomScreen(): JSX.Element {
       }));
 
       store.dispatch(fetchCommentAction(Number(id)));
+      setComment('');
+      setSendRating('');
       evt.currentTarget.reset();
     }
   };
@@ -152,8 +156,8 @@ function RoomScreen(): JSX.Element {
               </div>
             </div>
             <section className="property__reviews reviews">
-              <h2 className="reviews__title">Reviews · <span className="reviews__amount">{comments.length}</span></h2>
-              <ReviewsList comments={comments} />
+              <h2 className="reviews__title">Reviews · <span className="reviews__amount">{sortCommentsForPage.length}</span></h2>
+              <ReviewsList comments={sortCommentsForPage} />
               {authorizationStatus === AuthorizationStatus.Auth &&
                 <form
                   className="reviews__form form"

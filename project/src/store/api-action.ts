@@ -105,11 +105,16 @@ export const checkAuthAction = createAsyncThunk(
 
 export const logoutAction = createAsyncThunk(
   'user/logout',
-  async () => {
+  async (id?: number) => {
     try {
       await api.delete(ApiRoute.Logout);
       dropToken();
       store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+      store.dispatch(fetchHostelsAction());
+
+      if (id) {
+        store.dispatch(fetchNearbyHostelsAction(id));
+      }
     } catch (error) {
       errorHandle(error);
     }

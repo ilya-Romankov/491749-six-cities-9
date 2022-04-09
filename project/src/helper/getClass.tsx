@@ -2,16 +2,17 @@ import {ActiveClasses} from '../types/classes';
 import {ChildAndParentClassesHostelList} from '../types/classes';
 import {classesOnPage} from '../constant';
 import {classesOnHostelList} from '../constant';
+import {AppRoute} from '../constant';
 
 
 export const getClass = (path: string):ActiveClasses => {
   switch (path) {
-    case '/':
-      return classesOnPage['/'];
-    case '/favorites':
-      return classesOnPage['/favorites'];
-    case '/login' :
-      return classesOnPage['/login'];
+    case AppRoute.Main:
+      return classesOnPage[AppRoute.Main];
+    case AppRoute.Favorites:
+      return classesOnPage[AppRoute.Favorites];
+    case AppRoute.Sign_In :
+      return classesOnPage[AppRoute.Sign_In];
     default: return {activeClasses: 'page'};
   }
 };
